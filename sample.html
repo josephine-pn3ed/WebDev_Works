@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+<body>
+ 
+ 
+<div class="container">
+      <h2>Fill-Up Form</h2>
+  <form>
+    <h1>Class List</h1>
+
+    <br><br>
+    <div class="form-group">
+      <label>First Name:</label>
+      <input id="name" type="text" name="name" class="form-control" placeholder="Enter name" required="">
+    </div>
+    <div class="form-group">
+      <label>Last Name:</label>
+      <input id="name" type="text" name="name" class="form-control" placeholder="Enter name" required="">
+    </div>
+   
+    <div class="form-group">
+      <label>Course And Year:</label>
+      <input id="course" type="text" name="course" class="form-control" placeholder="Enter course nd year" required="">
+    </div>
+
+    <div class="form-group">
+      <label>Email Address:</label>
+      <input id='email' type="text" name="email" class="form-control" placeholder="Enter email" required="">
+    </div>
+
+    <div class="form-group">
+      <label>Address:</label>
+      <input  id = 'address' type="text" name="address" class="form-control" placeholder="Enter address" required="">
+    </div>
+   
+    <button type="submit" class="btn btn-success save-btn">Save</button>
+    <button type="submit" class="btn btn-success cancel-btn">Cancel</button>
+  </form>
+
+
+
+  <table class="table table-bordered data-table">
+    <tbody>
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Course And Year</th>
+        <th width="200px">Action</th>
+      </thead>
+    </tbody>
+  </table>
+
+  <button type="button" id="but1" class="addbtn btn-success" >Add Student</button>   
+   
+
+
+<style>
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+
+h2{
+  display:none;
+}
+  .form-group {
+  display: none;
+}
+ .btn{
+  display: none;
+  width: 49.5%;
+ }
+ .addbtn{
+  width: 100%;
+  padding: 10px;
+ }
+
+
+.edit{
+display:none;
+}
+
+.delete{
+display: none;
+}
+
+</style>
+   
+<script type="text/javascript">
+
+  var editRow ="";
+
+  $(document).ready(function(){
+    $("#but1").click(function(){
+      $('h2').show();
+      $(".table").hide();
+      $("#but1").hide();
+      $("h1").hide();
+      $(".save-btn").show();
+      $('.cancel-btn').show();
+       $(".form-group").show();
+    });
+
+    $(".btn").click(function(){
+      $(".save-btn").hide();
+      $('.cancel-btn').hide();
+       $(".form-group").hide();
+       $('h2').hide();
+       $("h1").show();
+       $(".table").show();
+      $("#but1").show();
+    });
+
+
+    $(document).on("mouseenter", ".rows", function() {
+      $(this).find('.edit').show();
+      $(this).find('.delete').show();
+    });
+    $(document).on("mouseleave", ".rows", function() {
+      $(this).find('.edit').hide();
+      $(this).find('.delete').hide();
+    });
+  });
+
+  var row=null;
+  var counter = 0;
+  $("form").submit(function(e){
+    e.preventDefault();
+    var name = $("input[name='name']").val();
+    var course = $("input[name='course']").val();
+    var email = $("input[name='email']").val();
+    var address = $("input[name='address']").val();
+    counter = counter +1;
+    var temp = counter;
+    if (editRow !=""){
+    temp= editRow ;
+    }
+    var newrow = "<tr  class ='rows' id='r"+temp+"' data-counter='"+temp+"' data-name='"+name+"' data-course='"+course+"'><td class ='counter'>"+temp+"</td><td class ='name1'>"+name+"</td><td class ='course1'>"+course+"</td>  <td><button class='edit td2'>Edit</button><button class='delete td2'>Delete</button></td></tr>";
+
+    if(editRow !=""){
+    $("#r"+temp).replaceWith(newrow);
+    editRow = "";
+    } else {
+            $(".data-table tbody").append(newrow);
+        }
+            $("input[name='name']").val('');
+            $("input[name='course']").val('');
+        });
+   
+$(document).on("click", ".edit", function() {
+  $(".table").hide();
+  $('.btn').show();
+  $(".form-group").show();
+  $('#but1').hide();
+  editRow = $(this).closest("tr").find(".counter").text();
+  $("#name").val($(this).closest("tr").find(".name1").text());
+  $("#course").val($(this).closest("tr").find(".course1").text());
+         
+});
+
+$("body").on("click", ".delete", function(){
+  $(this).parents("tr").remove();
+});
+ 
+
+ 
+
+
+
+ 
+</script>
+     
+</body>
+</html>
